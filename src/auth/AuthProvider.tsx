@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { fakeAuthProvider } from "./auth";
+import React, { ReactNode, useEffect } from "react";
+import { useSessionStorage } from "react-use";
 import { AuthContext } from "./AuthContext";
 
 type Props = {
@@ -8,22 +8,21 @@ type Props = {
 
 export function AuthProvider({ children }: Props) {
   let [user, setUser] = React.useState<any>(null);
+  const [sesionUser, setSesionUser] = useSessionStorage<string>(
+    "user",
+    undefined
+  );
 
-  let signin = (newUser: string, callback: VoidFunction) => {
-    return fakeAuthProvider.signin(() => {
-      setUser(newUser);
-      callback();
-    });
+  useEffect(() => {
+    setUser(sesionUser);
+  }, [setUser, sesionUser]);
+
+  const handleLogin = (userHash: string) => {
+    setUser(userHash);
+    setSesionUser(userHash);
   };
 
-  let signout = (callback: VoidFunction) => {
-    return fakeAuthProvider.signout(() => {
-      setUser(null);
-      callback();
-    });
-  };
-
-  let value = { user, signin, signout };
+  let value = { user, handleLogin };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

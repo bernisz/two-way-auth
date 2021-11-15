@@ -26,9 +26,9 @@ function App() {
             <Route
               path="/main"
               element={
-                // <RequireAuth>
-                <Main />
-                // </RequireAuth>
+                <RequireAuth>
+                  <Main />
+                </RequireAuth>
               }
             />
             <Route

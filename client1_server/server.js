@@ -65,18 +65,18 @@ const agent = new https.Agent({
 	});
 
 
-app.get('/api/authenticate', (req, res) => {
+// app.get('/api/authenticate', (req, res) => {
     
-    axios.get('https://localhost:4433/authenticate', {httpsAgent: agent})
-	.then((res) => {
-		console.log(res.data);
-	})
-	.catch((err) => {
-		console.error(err.response.data);
-	});
+//     axios.get('https://localhost:4433/authenticate', {httpsAgent: agent})
+// 	.then((res) => {
+// 		console.log(res.data);
+// 	})
+// 	.catch((err) => {
+// 		console.error(err.response.data);
+// 	});
 
-  res.send('Hello dev.to!');
-});
+//   res.send('Hello dev.to!');
+// });
 
 app.post('/api/add-user',async (req,res) => {
 

@@ -55,70 +55,70 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/authenticate', (req, res) => {
-	const cert = req.socket.getPeerCertificate();
+// app.get('/authenticate', (req, res) => {
+// 	const cert = req.socket.getPeerCertificate();
 
-	if (req.client.authorized) {
-		res.send(`Hello ${cert.subject.CN}, your certificate was issued by ${cert.issuer.CN}!`);
+// 	if (req.client.authorized) {
+// 		res.send(`Hello ${cert.subject.CN}, your certificate was issued by ${cert.issuer.CN}!`);
 
-	} else if (cert.subject) {
-		res.status(403)
-			 .send(`Sorry ${cert.subject.CN}, certificates from ${cert.issuer.CN} are not welcome here.`);
+// 	} else if (cert.subject) {
+// 		res.status(403)
+// 			 .send(`Sorry ${cert.subject.CN}, certificates from ${cert.issuer.CN} are not welcome here.`);
 
-	} else {
-		res.status(401)
-		   .send(`Sorry, but you need to provide a client certificate to continue.`);
-	}
-});
+// 	} else {
+// 		res.status(401)
+// 		   .send(`Sorry, but you need to provide a client certificate to continue.`);
+// 	}
+// });
 
-app.post('/api/add-user',async (req,res) => {
+// app.post('/api/add-user',async (req,res) => {
 
-    try {
-    const passwordHash = await argon2.hash(req.body.password, {
-        timeCost: 12,
-        memoryCost: 8192,
-      });
+//     try {
+//     const passwordHash = await argon2.hash(req.body.password, {
+//         timeCost: 12,
+//         memoryCost: 8192,
+//       });
 
-    const resp = await set(ref(firebaseDatabase, 'users/' + req.body.username), {
-        username: req.body.username,
-        password: passwordHash,
-      });
-    //   console.log(resp.val())
-  res.json({msg: resp})
-} catch (err) {
-    res.status(500).json({
-      error: 'internal server error'
-    });
-  }
-});
+//     const resp = await set(ref(firebaseDatabase, 'users/' + req.body.username), {
+//         username: req.body.username,
+//         password: passwordHash,
+//       });
+//     //   console.log(resp.val())
+//   res.json({msg: resp})
+// } catch (err) {
+//     res.status(500).json({
+//       error: 'internal server error'
+//     });
+//   }
+// });
 
-app.post('/api/signin-user', async (req,res)=> {
+// app.post('/api/signin-user', async (req,res)=> {
 
-    try {
-    const user = await get(child(ref(firebaseDatabase), `users/${req.body.username}`));
+//     try {
+//     const user = await get(child(ref(firebaseDatabase), `users/${req.body.username}`));
 
-      console.log(user.val())
+//       console.log(user.val())
 
-    argon2
-      .verify(user.val().password, req.body.password, {
-        timeCost: 12,
-        memoryCost: 8192,
-      })
-      .then((match) => {
-        if (!match) {
-          res.status(400).json({
-            error: "Wrong Username and Password Combination!",
-          });
-        } else {
-          res.status(200).json({username: user.val().username});
-        }
-      });
-} catch (err) {
-    res.status(500).json({
-      error: 'internal server error'
-    });
-  }
-})
+//     argon2
+//       .verify(user.val().password, req.body.password, {
+//         timeCost: 12,
+//         memoryCost: 8192,
+//       })
+//       .then((match) => {
+//         if (!match) {
+//           res.status(400).json({
+//             error: "Wrong Username and Password Combination!",
+//           });
+//         } else {
+//           res.status(200).json({username: user.val().username});
+//         }
+//       });
+// } catch (err) {
+//     res.status(500).json({
+//       error: 'internal server error'
+//     });
+//   }
+// })
 
 app.post('/api/start-room',async (req,res) => {
     try{

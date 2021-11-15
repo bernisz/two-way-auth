@@ -19,10 +19,13 @@ export function SignUp() {
     const data = new FormData(event.currentTarget);
 
     axios
-      .post("http://localhost:8081/api/add-user", {
-        username: data.get("username"),
-        password: data.get("password"),
-      })
+      .post(
+        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/add-user`,
+        {
+          username: data.get("username"),
+          password: data.get("password"),
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
           navigate("/signin", { replace: true });

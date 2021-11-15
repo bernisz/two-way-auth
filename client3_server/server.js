@@ -29,7 +29,7 @@ const firebaseDatabase = getDatabase(firbebaseApp)
 
 const app = express();
 app.use(helmet());
-const whitelist = ["http://localhost:3000","http://localhost:3001", "http://localhost:8081, 'http://localhost:8080'"];
+const whitelist = ["http://localhost:3000","http://localhost:3001", "http://localhost:8082, 'http://localhost:8080'"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -56,8 +56,8 @@ app.use((req, res, next) => {
 });
 
 
-const certFile = path.resolve(__dirname, `client1_cert.pem`);
-const keyFile = path.resolve(__dirname, `client1_key.pem`);
+const certFile = path.resolve(__dirname, `client3_cert.pem`);
+const keyFile = path.resolve(__dirname, `client3_key.pem`);
 const agent = new https.Agent({
 		cert: fs.readFileSync(certFile),
 		key: fs.readFileSync(keyFile),
@@ -204,7 +204,7 @@ app.put('/api/approve-first-user-id',async (req, res) => {
 const httpServer = http.createServer(app);
 
 
-httpServer.listen(8081, () => {
-    console.log('HTTP Server running on port 8081');
+httpServer.listen(8083, () => {
+    console.log('HTTP Server running on port 8083');
 });
 

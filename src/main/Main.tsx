@@ -20,7 +20,7 @@ export function Main() {
     mutate,
   } = useMutation<any, unknown, { user: string }>(async (requestData) => {
     const { data } = await axios.post(
-      "http://localhost:8081/api/start-room",
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/start-room`,
       requestData
     );
     return data;
@@ -41,7 +41,7 @@ export function Main() {
     useMutation<any, unknown, { secondUserId: number; roomId: number }>(
       async (requestData) => {
         const { data } = await axios.put(
-          "http://localhost:8081/api/approve-second-user-id",
+          `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/approve-second-user-id`,
           requestData
         );
         return data;

@@ -46,7 +46,7 @@ export function JoinRoomInfo() {
     useMutation<any, unknown, { firstUserId: number; roomId: number }>(
       async (requestData) => {
         const { data } = await axios.put(
-          "http://localhost:8081/api/approve-first-user-id",
+          `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/approve-first-user-id`,
           requestData
         );
         return data;

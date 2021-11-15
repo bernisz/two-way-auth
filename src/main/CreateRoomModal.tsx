@@ -26,7 +26,9 @@ export function CreateRoomModal({ roomId, isSecondUser = false }: Props) {
   const { isFetching } = useQuery(
     "roomData",
     async () => {
-      const res = await axios.get(`http://localhost:8081/api/room/${roomId}`);
+      const res = await axios.get(
+        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/room/${roomId}`
+      );
       return res.data;
     },
     {

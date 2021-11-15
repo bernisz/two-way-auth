@@ -19,10 +19,13 @@ export function SignIn() {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     axios
-      .post("http://localhost:8081/api/signin-user", {
-        username: data.get("username"),
-        password: data.get("password"),
-      })
+      .post(
+        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/signin-user`,
+        {
+          username: data.get("username"),
+          password: data.get("password"),
+        }
+      )
       .then((response) => {
         handleLogin(response.data.username);
         navigate("/main", { replace: true });

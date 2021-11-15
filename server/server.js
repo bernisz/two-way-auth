@@ -31,7 +31,7 @@ const opts = {
 	key: fs.readFileSync(path.join(__dirname, 'server_key.pem')),
 	cert: fs.readFileSync(path.join(__dirname, 'server_cert.pem')),
 	requestCert: true,
-	rejectUnauthorized: false, // so we can do own error handling
+	rejectUnauthorized: true, // so we can do own error handling
 	ca: [
 		fs.readFileSync(path.join(__dirname, 'server_cert.pem'))
 	]
@@ -140,7 +140,6 @@ app.post('/api/start-room',async (req,res) => {
 
       res.status(200).json({id: roomId})
     } catch (err) {
-       
         res.status(500).json({
           error: 'internal server error'
         });
